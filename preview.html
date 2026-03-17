@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coach Antoine Trifonov | Elite Soccer Training</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg:          #0a0a0a;
+      --color-bg-2:        #111111;
+      --color-surface:     #1e1e1e;
+      --color-surface-2:   #252525;
+      --color-border:      #2a2a2a;
+      --color-border-2:    #333333;
+      --color-accent:      #e8c547;
+      --color-accent-dim:  #c9a82e;
+      --color-accent-glow: rgba(232,197,71,0.15);
+      --color-white:       #ffffff;
+      --color-white-90:    rgba(255,255,255,0.9);
+      --color-white-60:    rgba(255,255,255,0.6);
+      --color-white-30:    rgba(255,255,255,0.3);
+      --color-white-10:    rgba(255,255,255,0.1);
+      --color-white-05:    rgba(255,255,255,0.05);
+      --font-display:      'Bebas Neue', sans-serif;
+      --font-body:         'Inter', sans-serif;
+      --radius-sm:  6px;
+      --radius-md:  12px;
+      --radius-lg:  20px;
+      --radius-xl:  32px;
+      --shadow-card:       0 4px 24px rgba(0,0,0,0.4);
+      --shadow-card-hover: 0 12px 48px rgba(0,0,0,0.6);
+      --shadow-glow:       0 0 40px rgba(232,197,71,0.2);
+      --transition-fast:   0.15s ease;
+      --transition-base:   0.25s ease;
+      --max-width:         1200px;
+      --section-pad:       100px 24px;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { background: var(--color-bg); color: var(--color-white); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    .text-accent { color: var(--color-accent); }
+
+    .section-label {
+      display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--color-accent); padding: 6px 14px;
+      border: 1px solid var(--color-accent); border-radius: 100px; margin-bottom: 20px;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(2.4rem,5vw,4rem);
+      line-height: 1.05; letter-spacing: 0.02em; color: var(--color-white); margin-bottom: 24px;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 28px; border-radius: var(--radius-sm); font-family: var(--font-body);
+      font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      transition: all var(--transition-base); white-space: nowrap; cursor: pointer;
+    }
+    .btn--primary { background: var(--color-accent); color: #000; border: 2px solid var(--color-accent); }
+    .btn--primary:hover { background: var(--color-accent-dim); border-color: var(--color-accent-dim); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,197,71,0.35); }
+    .btn--ghost { background: transparent; color: var(--color-white); border: 2px solid var(--color-white-30); }
+    .btn--ghost:hover { border-color: var(--color-white); background: var(--color-white-10); transform: translateY(-2px); }
+    .btn--outline { background: transparent; color: var(--color-white); border: 2px solid var(--color-border-2); }
+    .btn--outline:hover { border-color: var(--color-accent); color: var(--color-accent); transform: translateY(-2px); }
+    .btn--lg { padding: 18px 36px; font-size: 15px; }
+    .btn--full { width: 100%; }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 24px;
+      transition: background var(--transition-base), box-shadow var(--transition-base);
+    }
+    .nav.scrolled {
+      background: rgba(10,10,10,0.95); backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px); box-shadow: 0 1px 0 var(--color-border);
+    }
+    .nav__container {
+      max-width: var(--max-width); margin: 0 auto; height: 72px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav__logo { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 0.05em; line-height: 1; }
+    .nav__logo-name { color: var(--color-white); }
+    .nav__logo-accent { color: var(--color-accent); }
+    .nav__links { display: flex; align-items: center; gap: 36px; }
+    .nav__link { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-white-60); transition: color var(--transition-fast); }
+    .nav__link:hover { color: var(--color-white); }
+    .nav__link--cta { background: var(--color-accent); color: #000 !important; padding: 10px 20px; border-radius: var(--radius-sm); font-weight: 700; }
+    .nav__link--cta:hover { background: var(--color-accent-dim); transform: translateY(-1px); }
+    .nav__toggle { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+    .nav__toggle span { display: block; width: 24px; height: 2px; background: var(--color-white); border-radius: 2px; transition: all var(--transition-base); }
+
+    /* HERO */
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; background: var(--color-bg); overflow: hidden; }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 60% 50%, rgba(232,197,71,0.07) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 80% at 100% 50%, rgba(76,175,80,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: ''; position: absolute; top: -20%; right: -10%; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(232,197,71,0.06) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero__bg-overlay {
+      position: absolute; right: 4%; top: 50%; transform: translateY(-50%);
+      font-family: var(--font-display); font-size: clamp(200px,30vw,420px);
+      color: var(--color-white-05); line-height: 1; pointer-events: none; user-select: none;
+    }
+    .hero__bg-overlay::before { content: '10'; }
+    .hero__container { position: relative; z-index: 1; max-width: var(--max-width); width: 100%; margin: 0 auto; padding: 120px 24px 80px; }
+    .hero__badge {
+      display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent);
+      padding: 8px 16px; border: 1px solid rgba(232,197,71,0.3); border-radius: 100px;
+      background: rgba(232,197,71,0.06); margin-bottom: 32px;
+    }
+    .hero__title {
+      font-family: var(--font-display); font-size: clamp(3.5rem,9vw,8rem);
+      line-height: 0.95; letter-spacing: 0.02em; color: var(--color-white);
+      margin-bottom: 28px; max-width: 700px;
+    }
+    .hero__title-accent { color: var(--color-accent); }
+    .hero__subtitle { font-size: clamp(1rem,1.5vw,1.2rem); color: var(--color-white-60); max-width: 520px; line-height: 1.7; margin-bottom: 44px; }
+    .hero__actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 72px; }
+    .hero__stats { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+    .hero__stat { display: flex; flex-direction: column; gap: 4px; }
+    .hero__stat-number { font-family: var(--font-display); font-size: 2.4rem; line-height: 1; color: var(--color-white); letter-spacing: 0.02em; }
+    .hero__stat-label { font-size: 12px; font-weight: 500; color: var(--color-white-60); text-transform: uppercase; letter-spacing: 0.08em; }
+    .hero__stat-divider { width: 1px; height: 40px; background: var(--color-border-2); }
+    .hero__scroll-indicator {
+      position: absolute; left: 24px; bottom: 40px; display: flex; flex-direction: column;
+      align-items: center; gap: 12px; font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+      color: var(--color-white-30); text-transform: uppercase;
+    }
+    .hero__scroll-line {
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, var(--color-white-30), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:0.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.1)} }
+
+    /* MARQUEE */
+    .marquee { background: var(--color-accent); overflow: hidden; padding: 14px 0; border-top: 1px solid var(--color-accent-dim); border-bottom: 1px solid var(--color-accent-dim); }
+    .marquee__track { display: flex; white-space: nowrap; animation: marqueeScroll 22s linear infinite; }
+    .marquee__track span { font-size: 13px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: #000; padding: 0 24px; }
+    .marquee__dot { font-size: 10px !important; padding: 0 4px !important; opacity: 0.5; }
+    @keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ABOUT */
+    .about { padding: var(--section-pad); background: var(--color-bg-2); }
+    .about__container { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about__image-wrapper { position: relative; }
+    .about__image-placeholder {
+      aspect-ratio: 3/4; background: var(--color-surface); border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-2); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px; color: var(--color-white-30);
+      font-size: 14px; font-weight: 600; letter-spacing: 0.05em; overflow: hidden; position: relative;
+    }
+    .about__image-placeholder::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(232,197,71,0.05) 0%, transparent 60%);
+    }
+    .about__image-icon { font-size: 80px; line-height: 1; }
+    .about__image-badge {
+      position: absolute; bottom: -20px; right: -20px; background: var(--color-accent);
+      color: #000; border-radius: var(--radius-md); padding: 20px 24px; text-align: center; box-shadow: var(--shadow-card);
+    }
+    .about__image-badge-number { display: block; font-family: var(--font-display); font-size: 2.4rem; line-height: 1; letter-spacing: 0.02em; }
+    .about__image-badge-text { font-size: 12px; font-weight: 700; line-height: 1.3; letter-spacing: 0.05em; }
+    .about__text { color: var(--color-white-60); font-size: 1.05rem; line-height: 1.75; margin-bottom: 16px; }
+    .about__credentials { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 32px 0 36px; }
+    .about__credential {
+      display: flex; align-items: center; gap: 10px; background: var(--color-surface);
+      border: 1px solid var(--color-border-2); border-radius: var(--radius-sm); padding: 12px 16px;
+      font-size: 13px; font-weight: 600; transition: border-color var(--transition-fast);
+    }
+    .about__credential:hover { border-color: var(--color-accent); }
+    .about__credential-icon { font-size: 18px; }
+
+    /* PROGRAMS */
+    .programs { padding: var(--section-pad); background: var(--color-bg); }
+    .programs__container { max-width: var(--max-width); margin: 0 auto; }
+    .programs__header { text-align: center; max-width: 640px; margin: 0 auto 64px; }
+    .programs__subtitle { font-size: 1.05rem; color: var(--color-white-60); line-height: 1.7; }
+    .programs__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; align-items: stretch; }
+
+    .program-card {
+      position: relative; background: var(--color-surface); border: 1px solid var(--color-border-2);
+      border-radius: var(--radius-lg); padding: 40px 32px; display: flex; flex-direction: column;
+      transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+    }
+    .program-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-card-hover); }
+    .program-card--featured { background: var(--color-bg); border-color: var(--color-accent); transform: scale(1.03); box-shadow: 0 0 0 1px var(--color-accent), var(--shadow-glow); }
+    .program-card--featured:hover { transform: scale(1.03) translateY(-6px); }
+    .program-card__popular-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--color-accent); color: #000; font-size: 11px; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 16px; border-radius: 100px; white-space: nowrap;
+    }
+    .program-card__label { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 16px; }
+    .program-card__icon { font-size: 2.4rem; margin-bottom: 16px; line-height: 1; }
+    .program-card__title { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: 0.03em; color: var(--color-white); margin-bottom: 16px; line-height: 1.1; }
+    .program-card__desc { font-size: 14px; color: var(--color-white-60); line-height: 1.65; margin-bottom: 28px; }
+    .program-card__features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; flex: 1; }
+    .program-card__features li { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--color-white-90); font-weight: 500; }
+    .program-card__features li::before {
+      content: '✓'; display: flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; min-width: 20px; background: rgba(232,197,71,0.12);
+      border: 1px solid rgba(232,197,71,0.3); border-radius: 50%; font-size: 10px;
+      color: var(--color-accent); font-weight: 800;
+    }
+    .program-card__price { margin-bottom: 24px; display: flex; align-items: baseline; gap: 4px; }
+    .program-card__price-amount { font-family: var(--font-display); font-size: 2.8rem; letter-spacing: 0.02em; color: var(--color-white); line-height: 1; }
+    .program-card__price-period { font-size: 14px; color: var(--color-white-60); font-weight: 500; }
+
+    /* RESULTS */
+    .results { padding: var(--section-pad); background: var(--color-bg-2); }
+    .results__container { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .results__text { font-size: 1.05rem; color: var(--color-white-60); line-height: 1.75; margin-bottom: 40px; }
+    .results__steps { display: flex; flex-direction: column; gap: 32px; }
+    .result-step { display: flex; gap: 20px; align-items: flex-start; }
+    .result-step__number { font-family: var(--font-display); font-size: 1.4rem; color: var(--color-accent); line-height: 1; min-width: 40px; padding-top: 2px; }
+    .result-step__body h4 { font-size: 1rem; font-weight: 700; color: var(--color-white); margin-bottom: 6px; }
+    .result-step__body p { font-size: 14px; color: var(--color-white-60); line-height: 1.65; }
+    .results__stats-col { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 100px; }
+    .results__stat-card { background: var(--color-surface); border: 1px solid var(--color-border-2); border-radius: var(--radius-lg); padding: 36px; transition: transform var(--transition-base); }
+    .results__stat-card:hover { transform: translateY(-3px); }
+    .results__stat-card--accent { background: var(--color-accent); border-color: var(--color-accent); color: #000; }
+    .results__stat-number { display: block; font-family: var(--font-display); font-size: 4rem; line-height: 1; letter-spacing: 0.02em; color: var(--color-white); margin-bottom: 12px; }
+    .results__stat-card--accent .results__stat-number { color: #000; }
+    .results__stat-label { font-size: 15px; font-weight: 600; color: var(--color-white-60); line-height: 1.5; }
+    .results__stat-card--accent .results__stat-label { color: rgba(0,0,0,0.65); }
+
+    /* TESTIMONIALS */
+    .testimonials { padding: var(--section-pad); background: var(--color-bg); }
+    .testimonials__container { max-width: var(--max-width); margin: 0 auto; }
+    .testimonials__header { text-align: center; max-width: 560px; margin: 0 auto 64px; }
+    .testimonials__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .testimonial-card {
+      background: var(--color-surface); border: 1px solid var(--color-border-2); border-radius: var(--radius-lg);
+      padding: 32px; display: flex; flex-direction: column; gap: 20px;
+      transition: transform var(--transition-base), border-color var(--transition-base);
+    }
+    .testimonial-card:hover { transform: translateY(-4px); border-color: var(--color-accent); }
+    .testimonial-card--highlight { background: var(--color-surface-2); border-color: rgba(232,197,71,0.25); }
+    .testimonial-card__stars { font-size: 16px; color: var(--color-accent); letter-spacing: 2px; }
+    .testimonial-card__quote { font-size: 14.5px; color: var(--color-white-60); line-height: 1.7; flex: 1; font-style: italic; }
+    .testimonial-card__author { display: flex; align-items: center; gap: 14px; }
+    .testimonial-card__avatar {
+      width: 44px; height: 44px; min-width: 44px; border-radius: 50%;
+      background: var(--color-accent); color: #000; display: flex; align-items: center;
+      justify-content: center; font-size: 13px; font-weight: 800; letter-spacing: 0.05em;
+    }
+    .testimonial-card__author strong { display: block; font-size: 14px; font-weight: 700; color: var(--color-white); margin-bottom: 2px; }
+    .testimonial-card__author span { font-size: 12px; color: var(--color-white-60); }
+
+    /* CTA BANNER */
+    .cta-banner { padding: 80px 24px; background: var(--color-accent); position: relative; overflow: hidden; }
+    .cta-banner::before {
+      content: 'WIN'; position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+      font-family: var(--font-display); font-size: 18vw; color: rgba(0,0,0,0.06); line-height: 1; pointer-events: none;
+    }
+    .cta-banner__container { max-width: var(--max-width); margin: 0 auto; position: relative; z-index: 1; }
+    .cta-banner__content { max-width: 640px; }
+    .cta-banner__title { font-family: var(--font-display); font-size: clamp(2.4rem,5vw,4.5rem); line-height: 1; letter-spacing: 0.02em; color: #000; margin-bottom: 20px; }
+    .cta-banner__title .text-accent { color: rgba(0,0,0,0.45); }
+    .cta-banner__text { font-size: 1.1rem; color: rgba(0,0,0,0.65); margin-bottom: 36px; line-height: 1.6; font-weight: 500; }
+    .cta-banner .btn--primary { background: #000; border-color: #000; color: var(--color-accent); }
+    .cta-banner .btn--primary:hover { background: #111; border-color: #111; }
+
+    /* CONTACT */
+    .contact { padding: var(--section-pad); background: var(--color-bg-2); }
+    .contact__container { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
+    .contact__text { font-size: 1.05rem; color: var(--color-white-60); line-height: 1.75; margin-bottom: 40px; }
+    .contact__details { display: flex; flex-direction: column; gap: 16px; }
+    .contact__detail { display: flex; align-items: center; gap: 14px; font-size: 14.5px; color: var(--color-white-60); }
+    .contact__detail-icon { font-size: 20px; }
+    .contact__form-wrapper { background: var(--color-surface); border: 1px solid var(--color-border-2); border-radius: var(--radius-xl); padding: 48px 40px; }
+    .contact__form { display: flex; flex-direction: column; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-white-60); }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; background: var(--color-bg); border: 1px solid var(--color-border-2);
+      border-radius: var(--radius-sm); padding: 14px 16px; font-family: var(--font-body);
+      font-size: 14px; color: var(--color-white); transition: border-color var(--transition-fast); outline: none;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--color-white-30); }
+    .form-group select option { background: var(--color-bg); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px var(--color-accent-glow); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .contact__form-note { text-align: center; font-size: 12.5px; color: var(--color-white-30); }
+
+    /* FOOTER */
+    .footer { background: var(--color-bg); border-top: 1px solid var(--color-border); padding: 80px 24px 32px; }
+    .footer__container { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; padding-bottom: 60px; border-bottom: 1px solid var(--color-border); margin-bottom: 32px; }
+    .footer__logo { font-family: var(--font-display); font-size: 2rem; letter-spacing: 0.05em; margin-bottom: 16px; }
+    .footer__tagline { font-size: 14px; color: var(--color-white-60); line-height: 1.6; margin-bottom: 28px; }
+    .footer__social { display: flex; gap: 10px; }
+    .footer__social-link {
+      width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--color-surface);
+      border: 1px solid var(--color-border-2); display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; letter-spacing: 0.05em; color: var(--color-white-60);
+      transition: all var(--transition-fast);
+    }
+    .footer__social-link:hover { background: var(--color-accent); border-color: var(--color-accent); color: #000; }
+    .footer__links-group h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-white); margin-bottom: 20px; }
+    .footer__links-group ul { display: flex; flex-direction: column; gap: 12px; }
+    .footer__links-group a { font-size: 14px; color: var(--color-white-60); transition: color var(--transition-fast); }
+    .footer__links-group a:hover { color: var(--color-accent); }
+    .footer__bottom { max-width: var(--max-width); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--color-white-30); }
+
+    /* ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .programs__grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .program-card--featured { transform: none; }
+      .program-card--featured:hover { transform: translateY(-6px); }
+      .testimonials__grid { grid-template-columns: 1fr 1fr; }
+      .about__container, .results__container, .contact__container { grid-template-columns: 1fr; gap: 48px; }
+      .about__image-wrapper { max-width: 400px; margin: 0 auto; }
+      .footer__container { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      :root { --section-pad: 72px 20px; }
+      .nav__links {
+        position: fixed; top: 72px; left: 0; right: 0; background: rgba(10,10,10,0.98);
+        backdrop-filter: blur(16px); flex-direction: column; align-items: flex-start; gap: 0;
+        padding: 20px 24px 32px; border-bottom: 1px solid var(--color-border);
+        transform: translateY(-110%); transition: transform var(--transition-base); z-index: 99;
+      }
+      .nav__links.open { transform: translateY(0); }
+      .nav__link { padding: 14px 0; width: 100%; font-size: 15px; border-bottom: 1px solid var(--color-border); }
+      .nav__link--cta { margin-top: 12px; text-align: center; border-bottom: none; }
+      .nav__toggle { display: flex; }
+      .hero__title { font-size: clamp(3rem,12vw,5rem); }
+      .hero__actions { flex-direction: column; }
+      .hero__scroll-indicator { display: none; }
+      .testimonials__grid { grid-template-columns: 1fr; }
+      .footer__container { grid-template-columns: 1fr; gap: 36px; }
+      .footer__bottom { flex-direction: column; gap: 8px; text-align: center; }
+      .contact__form-wrapper { padding: 32px 24px; }
+      .about__credentials { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero__stats { gap: 20px; }
+      .hero__stat-number { font-size: 1.8rem; }
+      .results__stat-number { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="#" class="nav__logo">
+        <span class="nav__logo-name">COACH</span><span class="nav__logo-accent">ANTOINE</span>
+      </a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#about" class="nav__link">About</a></li>
+        <li><a href="#programs" class="nav__link">Programs</a></li>
+        <li><a href="#results" class="nav__link">Results</a></li>
+        <li><a href="#testimonials" class="nav__link">Testimonials</a></li>
+        <li><a href="#contact" class="nav__link nav__link--cta">Work With Me</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero__bg-overlay"></div>
+    <div class="hero__container">
+      <div class="hero__badge">⚽ Elite Soccer Coaching</div>
+      <h1 class="hero__title">
+        TRAIN LIKE<br />
+        <span class="hero__title-accent">THE BEST.</span><br />
+        BECOME THE BEST.
+      </h1>
+      <p class="hero__subtitle">
+        Professional soccer training programs designed to unlock your full potential —
+        from youth players to aspiring professionals.
+      </p>
+      <div class="hero__actions">
+        <a href="#programs" class="btn btn--primary btn--lg">View Training Programs</a>
+        <a href="#about" class="btn btn--ghost btn--lg">Meet Coach Antoine</a>
+      </div>
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <span class="hero__stat-number">500+</span>
+          <span class="hero__stat-label">Athletes Trained</span>
+        </div>
+        <div class="hero__stat-divider"></div>
+        <div class="hero__stat">
+          <span class="hero__stat-number">12+</span>
+          <span class="hero__stat-label">Years Coaching</span>
+        </div>
+        <div class="hero__stat-divider"></div>
+        <div class="hero__stat">
+          <span class="hero__stat-number">Pro</span>
+          <span class="hero__stat-label">Level Results</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero__scroll-indicator">
+      <span>SCROLL</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee__track">
+      <span>TECHNICAL SKILLS</span><span class="marquee__dot">✦</span>
+      <span>TACTICAL AWARENESS</span><span class="marquee__dot">✦</span>
+      <span>PHYSICAL CONDITIONING</span><span class="marquee__dot">✦</span>
+      <span>MENTAL STRENGTH</span><span class="marquee__dot">✦</span>
+      <span>GAME INTELLIGENCE</span><span class="marquee__dot">✦</span>
+      <span>ELITE PERFORMANCE</span><span class="marquee__dot">✦</span>
+      <span>TECHNICAL SKILLS</span><span class="marquee__dot">✦</span>
+      <span>TACTICAL AWARENESS</span><span class="marquee__dot">✦</span>
+      <span>PHYSICAL CONDITIONING</span><span class="marquee__dot">✦</span>
+      <span>MENTAL STRENGTH</span><span class="marquee__dot">✦</span>
+      <span>GAME INTELLIGENCE</span><span class="marquee__dot">✦</span>
+      <span>ELITE PERFORMANCE</span><span class="marquee__dot">✦</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about__container">
+      <div class="about__image-col">
+        <div class="about__image-wrapper">
+          <div class="about__image-placeholder">
+            <div class="about__image-icon">⚽</div>
+            <p>Coach Antoine</p>
+          </div>
+          <div class="about__image-badge">
+            <span class="about__image-badge-number">12+</span>
+            <span class="about__image-badge-text">Years of Elite Coaching</span>
+          </div>
+        </div>
+      </div>
+      <div class="about__content">
+        <div class="section-label">About Coach Antoine</div>
+        <h2 class="section-title">I TURNED<br /><span class="text-accent">PASSION</span><br />INTO PURPOSE.</h2>
+        <p class="about__text">
+          With over 12 years of hands-on coaching experience at youth, semi-professional,
+          and professional levels, Coach Antoine Trifonov has developed a proven system
+          that transforms players from average to elite.
+        </p>
+        <p class="about__text">
+          As a former competitive player and UEFA-certified coach, Antoine understands
+          exactly what it takes to perform at the highest level — and how to get you there.
+        </p>
+        <div class="about__credentials">
+          <div class="about__credential"><span class="about__credential-icon">🏅</span><span>UEFA Licensed Coach</span></div>
+          <div class="about__credential"><span class="about__credential-icon">🎯</span><span>Former Semi-Pro Player</span></div>
+          <div class="about__credential"><span class="about__credential-icon">🏆</span><span>Multiple Championships</span></div>
+          <div class="about__credential"><span class="about__credential-icon">⭐</span><span>500+ Athletes Coached</span></div>
+        </div>
+        <a href="#programs" class="btn btn--primary">See My Programs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="programs" id="programs">
+    <div class="programs__container">
+      <div class="programs__header">
+        <div class="section-label">Training Programs</div>
+        <h2 class="section-title">CHOOSE YOUR<br /><span class="text-accent">PATH TO ELITE</span></h2>
+        <p class="programs__subtitle">Every athlete is different. Three structured programs built around your age, skill level, and goals.</p>
+      </div>
+      <div class="programs__grid">
+        <div class="program-card">
+          <div class="program-card__label">Foundation</div>
+          <div class="program-card__icon">⚽</div>
+          <h3 class="program-card__title">Youth Development Program</h3>
+          <p class="program-card__desc">Built for players ages 8–14. Develop fundamental technical skills, ball control, and love for the game through structured, fun sessions.</p>
+          <ul class="program-card__features">
+            <li>Ball mastery &amp; first touch</li>
+            <li>Dribbling &amp; shooting technique</li>
+            <li>Positional awareness basics</li>
+            <li>Small-sided game training</li>
+            <li>Confidence-building exercises</li>
+          </ul>
+          <div class="program-card__price">
+            <span class="program-card__price-amount">$149</span>
+            <span class="program-card__price-period">/ month</span>
+          </div>
+          <a href="#contact" class="btn btn--outline btn--full">Get Started</a>
+        </div>
+
+        <div class="program-card program-card--featured">
+          <div class="program-card__popular-badge">Most Popular</div>
+          <div class="program-card__label">Advanced</div>
+          <div class="program-card__icon">🔥</div>
+          <h3 class="program-card__title">Elite Performance Program</h3>
+          <p class="program-card__desc">For serious players ages 15–22 looking to reach the next level. Intensive tactical and physical training modeled on professional methods.</p>
+          <ul class="program-card__features">
+            <li>Advanced technical drills</li>
+            <li>Tactical formation training</li>
+            <li>Video analysis sessions</li>
+            <li>Fitness &amp; athleticism protocols</li>
+            <li>1-on-1 monthly check-ins</li>
+            <li>Mental performance coaching</li>
+          </ul>
+          <div class="program-card__price">
+            <span class="program-card__price-amount">$299</span>
+            <span class="program-card__price-period">/ month</span>
+          </div>
+          <a href="#contact" class="btn btn--primary btn--full">Get Started</a>
+        </div>
+
+        <div class="program-card">
+          <div class="program-card__label">Professional</div>
+          <div class="program-card__icon">🏆</div>
+          <h3 class="program-card__title">Pro Pathway Program</h3>
+          <p class="program-card__desc">Designed for semi-pro and aspiring professional players. Personalized coaching with direct access to Coach Antoine and elite network connections.</p>
+          <ul class="program-card__features">
+            <li>Fully personalized training plan</li>
+            <li>Unlimited 1-on-1 sessions</li>
+            <li>Match performance analysis</li>
+            <li>Nutrition &amp; recovery guidance</li>
+            <li>Recruitment &amp; exposure support</li>
+            <li>Direct coach contact &amp; support</li>
+          </ul>
+          <div class="program-card__price">
+            <span class="program-card__price-amount">$599</span>
+            <span class="program-card__price-period">/ month</span>
+          </div>
+          <a href="#contact" class="btn btn--outline btn--full">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="results" id="results">
+    <div class="results__container">
+      <div class="results__content">
+        <div class="section-label">What You'll Get</div>
+        <h2 class="section-title">A SYSTEM THAT<br /><span class="text-accent">DELIVERS RESULTS</span></h2>
+        <p class="results__text">My programs aren't just drills — they're a complete development system. From your first session to your breakthrough performance, every step is intentional.</p>
+        <div class="results__steps">
+          <div class="result-step">
+            <div class="result-step__number">01</div>
+            <div class="result-step__body">
+              <h4>Assessment &amp; Goal Setting</h4>
+              <p>We evaluate your current level and define exactly where you want to go — then build a roadmap to get you there.</p>
+            </div>
+          </div>
+          <div class="result-step">
+            <div class="result-step__number">02</div>
+            <div class="result-step__body">
+              <h4>Structured Training Plan</h4>
+              <p>Weekly sessions with progressive overload — technically, tactically, and physically — so you're always improving.</p>
+            </div>
+          </div>
+          <div class="result-step">
+            <div class="result-step__number">03</div>
+            <div class="result-step__body">
+              <h4>Performance Tracking</h4>
+              <p>Regular video reviews and performance benchmarks keep you accountable and show measurable growth.</p>
+            </div>
+          </div>
+          <div class="result-step">
+            <div class="result-step__number">04</div>
+            <div class="result-step__body">
+              <h4>Elite Level Execution</h4>
+              <p>Step on the field with confidence knowing you've been trained by the same methods used at the professional level.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="results__stats-col">
+        <div class="results__stat-card">
+          <span class="results__stat-number">94%</span>
+          <span class="results__stat-label">of athletes report significant skill improvement within 3 months</span>
+        </div>
+        <div class="results__stat-card results__stat-card--accent">
+          <span class="results__stat-number">78%</span>
+          <span class="results__stat-label">of Pro Program athletes received club trial invitations</span>
+        </div>
+        <div class="results__stat-card">
+          <span class="results__stat-number">500+</span>
+          <span class="results__stat-label">athletes trained across 12+ years of coaching</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="testimonials__container">
+      <div class="testimonials__header">
+        <div class="section-label">Testimonials</div>
+        <h2 class="section-title">REAL PLAYERS.<br /><span class="text-accent">REAL RESULTS.</span></h2>
+      </div>
+      <div class="testimonials__grid">
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p class="testimonial-card__quote">"Coach Antoine completely transformed my game. After 6 months in the Elite Program, I earned a spot on my college team. His technical approach and attention to detail is unmatched."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">MR</div>
+            <div><strong>Marcus R.</strong><span>Age 18 — College Recruit</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card testimonial-card--highlight">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p class="testimonial-card__quote">"My son went from being cut from his club team to starting every game. The Youth Development Program gave him skills AND confidence. Worth every penny — Antoine truly cares."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">SL</div>
+            <div><strong>Sarah L.</strong><span>Parent of Youth Player</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p class="testimonial-card__quote">"The Pro Pathway Program opened doors I didn't think were possible. Coach Antoine's network and personal guidance led to my first professional trial abroad."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">DK</div>
+            <div><strong>Daniel K.</strong><span>Semi-Pro Player</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p class="testimonial-card__quote">"The video analysis sessions alone changed everything for me. I could finally see my mistakes and fix them. Antoine's coaching style is intense but motivating."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">JM</div>
+            <div><strong>Jordan M.</strong><span>Elite Program Member</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p class="testimonial-card__quote">"I've worked with multiple coaches over the years and none come close to Antoine. His knowledge of the game, attention to individual development, and passion is something else."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">AL</div>
+            <div><strong>Alex L.</strong><span>Former Pro Program Athlete</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card testimonial-card--highlight">
+          <div class="testimonial-card__stars">★★★★★</div>
+          <p class="testimonial-card__quote">"Signed up skeptical — left a believer. My first touch, decision-making, and physical conditioning all leveled up in ways I couldn't have imagined."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">TC</div>
+            <div><strong>Tyler C.</strong><span>Elite Program Graduate</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="cta-banner__container">
+      <div class="cta-banner__content">
+        <h2 class="cta-banner__title">READY TO ELEVATE<br /><span class="text-accent">YOUR GAME?</span></h2>
+        <p class="cta-banner__text">Spots are limited. Take the first step toward becoming the player you're meant to be.</p>
+        <a href="#contact" class="btn btn--primary btn--lg">Apply Now — Limited Spots</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact__container">
+      <div class="contact__info">
+        <div class="section-label">Get In Touch</div>
+        <h2 class="section-title">LET'S BUILD<br /><span class="text-accent">YOUR GAME</span></h2>
+        <p class="contact__text">Ready to commit to your development? Fill out the application and I'll personally reach out to discuss the right program for you.</p>
+        <div class="contact__details">
+          <div class="contact__detail"><span class="contact__detail-icon">📍</span><span>Available Worldwide (Online &amp; In-Person)</span></div>
+          <div class="contact__detail"><span class="contact__detail-icon">📧</span><span>coach@antoinetrifonov.com</span></div>
+          <div class="contact__detail"><span class="contact__detail-icon">📱</span><span>Follow @CoachAntoine on Instagram</span></div>
+        </div>
+      </div>
+      <div class="contact__form-wrapper">
+        <form class="contact__form" id="contactForm">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Your full name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="age">Age / Player Age</label>
+            <input type="text" id="age" name="age" placeholder="e.g. 16 or 'My son is 12'" />
+          </div>
+          <div class="form-group">
+            <label for="program">Program Interest</label>
+            <select id="program" name="program">
+              <option value="">Select a program...</option>
+              <option value="youth">Youth Development Program ($149/mo)</option>
+              <option value="elite">Elite Performance Program ($299/mo)</option>
+              <option value="pro">Pro Pathway Program ($599/mo)</option>
+              <option value="unsure">Not sure yet — advise me</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Tell Me About Your Goals</label>
+            <textarea id="message" name="message" rows="4" placeholder="What are you looking to achieve? Current level, experience, goals..."></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--full btn--lg">Submit Application</button>
+          <p class="contact__form-note">I respond to all applications within 24–48 hours.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__brand">
+        <div class="footer__logo"><span>COACH</span><span class="text-accent"> ANTOINE</span></div>
+        <p class="footer__tagline">Developing elite soccer players<br />through world-class coaching.</p>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link">IG</a>
+          <a href="#" class="footer__social-link">TW</a>
+          <a href="#" class="footer__social-link">YT</a>
+          <a href="#" class="footer__social-link">TK</a>
+        </div>
+      </div>
+      <div class="footer__links-group">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="#programs">Youth Development</a></li>
+          <li><a href="#programs">Elite Performance</a></li>
+          <li><a href="#programs">Pro Pathway</a></li>
+        </ul>
+      </div>
+      <div class="footer__links-group">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#about">About Antoine</a></li>
+          <li><a href="#results">Results</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Apply Now</a></li>
+        </ul>
+      </div>
+      <div class="footer__links-group">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:coach@antoinetrifonov.com">Email Coach Antoine</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 Coach Antoine Trifonov. All rights reserved.</p>
+      <p>Built for champions.</p>
+    </div>
+  </footer>
+
+  <script>
+    // NAV scroll
+    const nav = document.getElementById('nav');
+    function handleNavScroll() { nav.classList.toggle('scrolled', window.scrollY > 40); }
+    window.addEventListener('scroll', handleNavScroll, { passive: true });
+    handleNavScroll();
+
+    // Mobile toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      const spans = navToggle.querySelectorAll('span');
+      if (isOpen) {
+        spans[0].style.transform = 'translateY(7px) rotate(45deg)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+      } else {
+        spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+      }
+    });
+    navLinks.querySelectorAll('.nav__link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navToggle.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+      });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', e => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Fade-up animations
+    function initFadeAnimations() {
+      const sel = '.about__content,.about__image-col,.program-card,.result-step,.results__stat-card,.testimonial-card,.programs__header,.contact__info,.contact__form-wrapper,.section-title,.hero__badge,.hero__title,.hero__subtitle,.hero__actions,.hero__stats';
+      document.querySelectorAll(sel).forEach(el => el.classList.add('fade-up'));
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+      ['.programs__grid','.testimonials__grid','.results__steps','.about__credentials'].forEach(s => {
+        const p = document.querySelector(s);
+        if (p) p.querySelectorAll('.fade-up').forEach((el, i) => el.style.transitionDelay = `${i*80}ms`);
+      });
+    }
+
+    // Count up
+    function countUp(el, target, suffix) {
+      let start = 0;
+      const step = ts => {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / 1800, 1);
+        el.textContent = Math.floor((1 - Math.pow(1-p, 3)) * target) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+    function initCounters() {
+      document.querySelectorAll('.hero__stat-number, .results__stat-number').forEach(el => {
+        const m = el.textContent.trim().match(/^(\d+)(\S*)$/);
+        if (!m) return;
+        const obs = new IntersectionObserver(entries => {
+          entries.forEach(e => { if (e.isIntersecting) { countUp(el, +m[1], m[2]||''); obs.unobserve(el); } });
+        }, { threshold: 0.5 });
+        obs.observe(el);
+      });
+    }
+
+    // Form
+    const form = document.getElementById('contactForm');
+    if (form) {
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        const orig = btn.textContent;
+        btn.textContent = 'Sending...'; btn.disabled = true;
+        setTimeout(() => {
+          btn.textContent = '✓ Application Sent!';
+          btn.style.cssText = 'background:#4caf50;border-color:#4caf50;color:#fff';
+          form.reset();
+          setTimeout(() => { btn.textContent = orig; btn.style.cssText = ''; btn.disabled = false; }, 4000);
+        }, 1200);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => { initFadeAnimations(); initCounters(); });
+  </script>
+</body>
+</html>
